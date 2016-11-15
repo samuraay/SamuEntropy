@@ -1,7 +1,7 @@
 /*
- * SplashActivity.java
+ * CounterBox.java
  *
- * Norbiron Game
+ * Norbiron Board
  * This is a case study for creating sprites for SamuEntropy/Brainboard.
  *
  * Copyright (C) 2016, Dr. Bátfai Norbert
@@ -35,39 +35,43 @@
  *
  * Version history:
  *
- * 0.0.1, 2013.szept.29.
- */
+ * 0.0.1, 6 Oct 16.
+ */ 
+
 package batfai.samuentropy.brainboard7;
 
-import android.os.Handler;
-import android.os.Bundle;
-import android.content.Intent;
-    
+import android.graphics.*;
 
-/**
- *
- * @author nbatfai
- */
-public class SplashActivity extends android.app.Activity {
+public class CounterBox {
+	private int x, y, cBoxHeight, cBoxWidth, cBoxValue;
 
+	public CounterBox(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    @Override
-    public void onCreate(android.os.Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.splash);
-    
+	public void counterDraw(android.graphics.Canvas canvas) {
+		Paint paint = new Paint(); 
+		paint.setColor(Color.WHITE); 
+		paint.setTextSize(60); 
+		canvas.drawText(Integer.toString(cBoxValue), x, y, paint);
+	}
 
-    int secondsDelayed = 1;
-    new Handler().postDelayed(new Runnable() {
-        public void run() {
-            Intent intent = new Intent();
-            intent.setClass(SplashActivity.this, Splash2.class);
-            SplashActivity.this.startActivity(intent);
-            finish();
-        }
-    }, secondsDelayed*2500);
-  }
+	public void count(int increment) {
+		this.cBoxValue += increment;
+	}
+
+	public int getValue() {
+		return this.cBoxValue;
+	}
+
+	/*
+    public boolean onTouchEvent(android.view.MotionEvent event) {
+    	if(android.view.GestureDetector.OnDoubleTapListener.onSingleTapConfirmed(event)) {
+    		CounterBox.count(1);
+    	}
+
+    return true;
+    }
+    */
 }
-
-

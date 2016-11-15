@@ -39,35 +39,48 @@
  */
 package batfai.samuentropy.brainboard7;
 
-import android.os.Handler;
-import android.os.Bundle;
-import android.content.Intent;
-    
+class Splash extends Thread {
+
+    Splash2 act;
+    android.graphics.drawable.AnimationDrawable anim;
+
+    public Splash(android.graphics.drawable.AnimationDrawable anim, Splash2 act) {
+        this.anim = anim;
+        this.act = act;
+    }
+
+    public void st() {
+        android.content.Intent intent = new android.content.Intent();
+        intent.setClass(act, NeuronGameActivity.class);
+        act.startActivity(intent);
+        anim.stop();
+    }
+
+    @Override
+    public void run() {
+        anim.start();
+    }
+}
 
 /**
  *
  * @author nbatfai
  */
-public class SplashActivity extends android.app.Activity {
+public class Splash2 extends android.app.Activity {
 
+    private Splash splash;
 
     @Override
     public void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.splash);
-    
+        setContentView(R.layout.menu);
+    }
 
-    int secondsDelayed = 1;
-    new Handler().postDelayed(new Runnable() {
-        public void run() {
-            Intent intent = new Intent();
-            intent.setClass(SplashActivity.this, Splash2.class);
-            SplashActivity.this.startActivity(intent);
-            finish();
+    @Override
+    public boolean onTouchEvent(android.view.MotionEvent evt) {
+        if (evt.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+            splash.st();
         }
-    }, secondsDelayed*2500);
-  }
-}
-
-
+        return true;
+    }
+} 
